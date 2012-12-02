@@ -41,7 +41,7 @@ urxvtc -name "tmux" -e zsh -c "tmux -2u attach" &
 
 
 ############
-# IO       #
+#    IO    #
 ############
 #numlockx & 
 if [[ "$HOST" == "LaXLinux-CL" ]]; then
