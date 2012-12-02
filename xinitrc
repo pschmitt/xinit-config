@@ -72,7 +72,7 @@ xbindkeys -f $XDG_CONFIG_HOME/xbindkeys/xbindkeysrc &
 # NETWORK  #
 ############
 LD_PRELOAD=/usr/lib/libfullscreenhack.so $BROWSER &
-[[ "$HOST" == "LaXLinux-CL" ]] && trickle -u 40 google-musicmanager &
+[[ "$HOST" == "LaXLinux" ]] && trickle -u 40 google-musicmanager &
 #sleep 30 && run_once offlineimap &
 
 
