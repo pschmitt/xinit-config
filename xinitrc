@@ -72,7 +72,11 @@ xbindkeys -f $XDG_CONFIG_HOME/xbindkeys/xbindkeysrc &
 # NETWORK  #
 ############
 LD_PRELOAD=/usr/lib/libfullscreenhack.so $BROWSER &
-[[ "$HOST" == "LaXLinux" ]] && trickle -u 40 google-musicmanager &
+if [[ "$HOST" == "LaXLinux" ]]; then
+    stalonetray &
+    trickle -u 40 google-musicmanager &
+    android-notifier-desktop &
+fi
 #sleep 30 && run_once offlineimap &
 
 
