@@ -1,0 +1,5 @@
+#!/bin/sh
+numlockx &
+irexec -d &
+trickle -u 40 google-musicmanager &
+android-notifier-desktop &
