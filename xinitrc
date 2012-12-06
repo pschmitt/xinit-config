@@ -1,4 +1,4 @@
-#!/bin/zsh -f
+#!/bin/zsh
 
 # Variables
 XLOGFILE=/var/log/xinitrc.log
@@ -29,41 +29,30 @@ $SESSION &> XLOGFILE & wmpid=$!
 ############
 #  SYSTEM  #
 ############
+stalonetray &
 spacefm -d &
-#sh ~/.fehbg & # now set by xrdr
 xrdb -merge $XDG_CONFIG_HOME/Xresources/Xresources &
 run_once unclutter &
 run_once urxvtd -q -o -f &
+sleep 5 && urxvtc -name "tmux" -e zsh -c "tmux -2u attach" &
+#sh ~/.fehbg & # now set by xrdr
 #xscreensaver -no-splash &
 #sleep 3 && xscreensaver-command -lock &
-urxvtc -name "tmux" -e zsh -c "tmux -2u attach" &
 #synergys &
 
 
 ############
 #    IO    #
 ############
-#numlockx & 
-if [[ "$HOST" == "LaXLinux-CL" ]]; then
-    synclient EmulateTwoFingerMinW=7 &
-    synclient EmulateTwoFingerMinZ=20 &
-#    synclient VertTwoFingerScroll=1 &
-    synclient HorizTwoFingerScroll=1 &
-    # syndaemon -i 2 & # Prevent mouse from clicking while typing (for 2sec)
-    xbacklight -display :0 -set 100 &
-    xautolock -locker "i3lock -b -i /home/pschmitt/pictures/wallpapers/me\ gusta\ mucho_1366.png" -time 3 &
-else
-    numlockx &
-    irexec -d &
-fi
 xmodmap $XDG_CONFIG_HOME/xmodmap/xmodmaprc &
 xsetroot -cursor_name left_ptr &
-# setxkbmap -option keypad:pointerkeys & # enable mouse keys (alternative: /etc/X11/xorg.conf.d/20-enable-pointerkeys.conf)
 xbindkeys -f $XDG_CONFIG_HOME/xbindkeys/xbindkeysrc &
+# setxkbmap -option keypad:pointerkeys & # enable mouse keys (alternative: /etc/X11/xorg.conf.d/20-enable-pointerkeys.conf)
 
 ############
 #  SOUND   #
 ############
+start-pulseaudio-x11
 #run_once mpd ~/.mpd/mpd.conf &
 #run_once mpdscribble &
 
@@ -72,11 +61,6 @@ xbindkeys -f $XDG_CONFIG_HOME/xbindkeys/xbindkeysrc &
 # NETWORK  #
 ############
 LD_PRELOAD=/usr/lib/libfullscreenhack.so $BROWSER &
-if [[ "$HOST" == "LaXLinux" ]]; then
-    stalonetray &
-    trickle -u 40 google-musicmanager &
-    android-notifier-desktop &
-fi
 #sleep 30 && run_once offlineimap &
 
 
@@ -93,6 +77,11 @@ fi
 ############
 remind -z1 '-kgxmessage -center -wrap %s &' ~/.remind/.reminders &
 
+#################
+# HOST SPECIFIC #
+#################
+MYXINITRC="$XDG_CONFIG_HOME/xinit/xinitrc_$(hostname)"
+[[ -x $MYXINITRC ]] && $MYXINITRC &
 
 # wait for wm
 wait $wmpid

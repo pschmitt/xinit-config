@@ -1,5 +1,4 @@
 #!/bin/sh
-echo "IM AM LAXLINUX-CL" >> /tmp/xinitrc.log
 synclient EmulateTwoFingerMinW=7 &
 synclient EmulateTwoFingerMinZ=20 &
 # synclient VertTwoFingerScroll=1 &
