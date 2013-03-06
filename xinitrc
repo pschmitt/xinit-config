@@ -20,10 +20,11 @@ run_once () {
 ############
 #    WM    #
 ############
-[[ $1 == "awesome" || $1 == "dwm" || $1 == "wmii" ]] && SESSION=$1 || SESSION="xmonad" #SESSION="awesome" SESSION="i3 -V" 
+[[ $1 == "awesome" || $1 == "dwm" || $1 == "wmii" ]] && SESSION=$1 || SESSION="xmonad"
 #ck-launch-session dbus-launch --exit-with-session
 $SESSION &> XLOGFILE & wmpid=$!
-~/bin/xrdr &
+#$SESSION & wmpid=$!
+#~/bin/xrdr &
 
 
 ############
@@ -35,7 +36,7 @@ xrdb -merge $XDG_CONFIG_HOME/Xresources/Xresources &
 run_once unclutter &
 run_once urxvtd -q -o -f &
 sleep 5 && urxvtc -name "tmux" -e zsh -c "tmux -2u attach" &
-#sh ~/.fehbg & # now set by xrdr
+nitrogen --restore &
 #xscreensaver -no-splash &
 #sleep 3 && xscreensaver-command -lock &
 #synergys &
@@ -52,7 +53,7 @@ xbindkeys -f $XDG_CONFIG_HOME/xbindkeys/xbindkeysrc &
 ############
 #  SOUND   #
 ############
-start-pulseaudio-x11
+start-pulseaudio-x11 &
 #run_once mpd ~/.mpd/mpd.conf &
 #run_once mpdscribble &
 
@@ -60,7 +61,7 @@ start-pulseaudio-x11
 ############
 # NETWORK  #
 ############
-LD_PRELOAD=/usr/lib/libfullscreenhack.so $BROWSER &
+$BROWSER &
 #sleep 30 && run_once offlineimap &
 
 
@@ -71,11 +72,11 @@ LD_PRELOAD=/usr/lib/libfullscreenhack.so $BROWSER &
 # jdownloader &
 
 
+############
+#   MISC   #
+############
+#remind -z1 '-kgxmessage -center -wrap %s &' ~/.remind/.reminders &
 
-############
-#  STUFF   #
-############
-remind -z1 '-kgxmessage -center -wrap %s &' ~/.remind/.reminders &
 
 #################
 # HOST SPECIFIC #

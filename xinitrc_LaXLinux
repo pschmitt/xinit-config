@@ -9,6 +9,13 @@ x11vnc -noxdamage -many -auth .Xauthority &
 
 # Tray apps
 pasystray & 
-trickle -u 40 google-musicmanager &
+#trickle -u 40 google-musicmanager &
 android-notifier-desktop &
+
+# Dirty hacks
+sudo systemctl restart sixad &
+sleep 10 && sudo systemctl restart tvheadend &
+
+# Multimedia
+# sleep 15 && xbmc &
 
