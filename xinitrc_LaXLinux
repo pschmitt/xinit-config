@@ -9,8 +9,11 @@ x11vnc -noxdamage -many -auth .Xauthority &
 
 # Tray apps
 pasystray & 
-#trickle -u 40 google-musicmanager &
+trickle -u 40 google-musicmanager &
 android-notifier-desktop &
+
+# Cloud
+CopyAgent &
 
 # Dirty hacks
 sudo systemctl restart sixad &

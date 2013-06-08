@@ -1,5 +1,13 @@
 #!/bin/zsh
 
+# From /etc/skel/.xinitrc
+if [ -d /etc/X11/xinit/xinitrc.d ]; then
+  for f in /etc/X11/xinit/xinitrc.d/*; do
+    [ -x "$f" ] && . "$f"
+  done
+  unset f
+fi
+
 # Variables
 XLOGFILE=/var/log/xinitrc.log
 
@@ -21,8 +29,8 @@ run_once () {
 #    WM    #
 ############
 [[ $1 == "awesome" || $1 == "dwm" || $1 == "wmii" ]] && SESSION=$1 || SESSION="xmonad"
-#ck-launch-session dbus-launch --exit-with-session
-$SESSION &> XLOGFILE & wmpid=$!
+#$SESSION &> XLOGFILE & wmpid=$!
+$SESSION & wmpid=$!
 #$SESSION & wmpid=$!
 #~/bin/xrdr &
 
@@ -31,8 +39,9 @@ $SESSION &> XLOGFILE & wmpid=$!
 #  SYSTEM  #
 ############
 stalonetray &
-spacefm -d &
-xrdb -merge $XDG_CONFIG_HOME/Xresources/Xresources &
+#spacefm -d &
+thunar --daemon &
+xrdb -merge $HOME/.config/Xresources/Xresources &
 run_once unclutter &
 run_once urxvtd -q -o -f &
 sleep 5 && urxvtc -name "tmux" -e zsh -c "tmux -2u attach" &
@@ -45,9 +54,9 @@ nitrogen --restore &
 ############
 #    IO    #
 ############
-xmodmap $XDG_CONFIG_HOME/xmodmap/xmodmaprc &
+xmodmap $HOME/.config/xmodmap/xmodmaprc &
 xsetroot -cursor_name left_ptr &
-xbindkeys -f $XDG_CONFIG_HOME/xbindkeys/xbindkeysrc &
+xbindkeys -f $HOME/.config/xbindkeys/xbindkeysrc &
 # setxkbmap -option keypad:pointerkeys & # enable mouse keys (alternative: /etc/X11/xorg.conf.d/20-enable-pointerkeys.conf)
 
 ############
@@ -81,7 +90,7 @@ $BROWSER &
 #################
 # HOST SPECIFIC #
 #################
-MYXINITRC="$XDG_CONFIG_HOME/xinit/xinitrc_$(hostname)"
+MYXINITRC="$HOME/.config/xinit/xinitrc_$(hostname)"
 [[ -x $MYXINITRC ]] && $MYXINITRC &
 
 # wait for wm
