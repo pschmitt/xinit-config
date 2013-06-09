@@ -5,4 +5,6 @@ synclient EmulateTwoFingerMinZ=20 &
 synclient HorizTwoFingerScroll=1 &
 # syndaemon -i 2 & # Prevent mouse from clicking while typing (for 2sec)
 xbacklight -display :0 -set 100 &
-xautolock -locker "i3lock -b -i /home/pschmitt/pictures/wallpapers/me\ gusta\ mucho_1366.png" -time 3 &
+if [[ "$(iw dev wlan0 link | grep SSID | awk '{ print $2 }')" != "AIDS_Netz" ]]; then
+    xautolock -locker "i3lock -b -i /home/pschmitt/pictures/wallpapers/me\ gusta\ mucho_1366.png" -time 3 &
+fi
