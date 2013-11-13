@@ -8,6 +8,16 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
+# Start a D-Bus session
+#source /etc/X11/xinit/xinitrc.d/30-dbus
+# Start GNOME Keyring
+eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh)
+# You probably need to do this too:
+export SSH_AUTH_SOCK
+export GPG_AGENT_INFO
+export GNOME_KEYRING_CONTROL
+export GNOME_KEYRING_PID
+
 # Variables
 XLOGFILE=/var/log/xinitrc.log
 
@@ -39,8 +49,7 @@ $SESSION & wmpid=$!
 #  SYSTEM  #
 ############
 stalonetray &
-#spacefm -d &
-thunar --daemon &
+spacefm -d &
 xrdb -merge $HOME/.config/Xresources/Xresources &
 run_once unclutter &
 run_once urxvtd -q -o -f &

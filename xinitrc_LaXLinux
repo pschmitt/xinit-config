@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Desktop specific
-numlockx &
+#numlockx &
 
 # RC
 irexec -d &
@@ -13,12 +13,12 @@ trickle -u 40 google-musicmanager &
 android-notifier-desktop &
 
 # Cloud
-CopyAgent &
+# CopyAgent &
 
 # Dirty hacks
 sudo systemctl restart sixad &
 sleep 10 && sudo systemctl restart tvheadend &
 
 # Multimedia
-# sleep 15 && xbmc &
+#sleep 15 && xbmc &
 
