@@ -72,14 +72,12 @@ xbindkeys -f $HOME/.config/xbindkeys/xbindkeysrc &
 #  SOUND   #
 ############
 start-pulseaudio-x11 &
-#run_once mpd ~/.mpd/mpd.conf &
-#run_once mpdscribble &
-
+volnoti &
 
 ############
 # NETWORK  #
 ############
-$BROWSER &
+${BROWSER}-fullscreenhack &
 #sleep 30 && run_once offlineimap &
 
 
