@@ -65,7 +65,7 @@ nitrogen --restore &
 ############
 xmodmap $HOME/.config/xmodmap/xmodmaprc &
 xsetroot -cursor_name left_ptr &
-xbindkeys -f $HOME/.config/xbindkeys/xbindkeysrc &
+sxhkd &
 # setxkbmap -option keypad:pointerkeys & # enable mouse keys (alternative: /etc/X11/xorg.conf.d/20-enable-pointerkeys.conf)
 
 ############
