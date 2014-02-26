@@ -1,2 +1,7 @@
-owncloud &
 touchegg &
+
+[[ $(sudo netctl-auto list | sed -n 's/^* \(.*\)/\1/p') == "eduroam" ]] && {
+    xautolock -time 30 -locker slock &
+} || {
+    owncloud &
+}
