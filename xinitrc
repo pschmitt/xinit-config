@@ -78,7 +78,7 @@ ${BROWSER}-fullscreenhack || $BROWSER &
 # HOST SPECIFIC #
 #################
 MYXINITRC="$HOME/.config/xinit/xinitrc_$(hostname)"
-[[ -x $MYXINITRC ]] && . $MYXINITRC &
+[[ -r $MYXINITRC ]] && . $MYXINITRC &
 
 # wait for wm
 wait $wmpid
