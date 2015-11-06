@@ -1,0 +1,52 @@
+#!/bin/bash
+
+WORK_NETWORKS="memento EPT-Wifi"
+wifi_network="$(sudo wpa_cli status | sed -nr 's|^ssid=(.*)|\1|p')"
+
+docked() {
+    # TODO Are you sure this is the dock?
+    lsusb | grep '0bf8:101e Fujitsu Siemens Computers' > /dev/null
+    # alternative:
+    # [[ $(cat /sys/devices/platform/dock.0/docked) -eq 0 ]])
+}
+
+at_work() {
+    # zsh
+    # [[ "${WORK_NETWORKS[(i)$wifi_network]}" -le "${#WORK_NETWORKS}" ]]
+    [[ "${WORK_NETWORKS[*]}" =~ "$wifi_network" ]]
+}
+
+work() {
+    if docked
+    then
+        # Switch to triple screen layout if at least 3 screens are connected
+        if [[ $(xrdr c) -gt 2 ]]
+        then
+            ~/.screenlayout/triple_screens.sh &
+            nitrogen --restore &
+            xmonad --restart &
+        fi
+    fi
+    # Disable wifi if wired ethernet is available
+    if [[ "$(cat /sys/class/net/enp0s25/operstate)" == 'up' ]]
+    then
+        sudo ip link set wlp3s0 down &
+    fi
+    # evolution &
+    xautolock -time 30 -locker slock &
+}
+
+home() {
+    echo "TODO"
+}
+
+# echo "$(date) EXECUTING POPOJITSU CONFIG " >> /tmp/XINIT_DEBUG
+
+if at_work
+then
+    work
+else
+    home
+fi
+
+# vim: set ft=sh et ts=4 sw=4
